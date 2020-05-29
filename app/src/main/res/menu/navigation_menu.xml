@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/addMessage"
+        android:title="Add Message" />
+    <item
+        android:id="@+id/displayMessage"
+        android:title="Display Message" />
+    <item
+        android:id="@+id/home"
+        android:title="home"
+        />
+    <item
+        android:id="@+id/movieSearch"
+        android:title="Movie Search"
+        />
+    <item
+        android:id="@+id/movieMemoir"
+        android:title="Movie Memoir"
+        />
+    <item
+        android:id="@+id/watchList"
+        android:title="Watchlist"
+        />
+    <item
+        android:id="@+id/reports"
+        android:title="Reports"
+        />
+    <item
+        android:id="@+id/maps"
+        android:title="Maps"
+        />
+</menu>

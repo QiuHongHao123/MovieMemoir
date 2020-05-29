@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/t_moviesearch"
+            android:layout_width="177dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="64dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvmovie"
+            style="@android:style/TextAppearance.Large"
+            android:layout_width="249dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="5dp"
+            android:text="Movie Search"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/b_moviesearch"
+            android:layout_width="76dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="195dp"
+            android:layout_marginTop="64dp"
+            android:text="Search"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ListView
+            android:id="@+id/sm_listview"
+            android:layout_width="292dp"
+            android:layout_height="510dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="101dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
