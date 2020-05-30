@@ -5,6 +5,9 @@ import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class SearchGoogleAPI {
@@ -46,20 +49,41 @@ public class SearchGoogleAPI {
         }
         return textResult;
     }
-    public static String getSnippet(String result){
+    public static List<HashMap<String,String>> getSnippet(String result){
         String snippet = null;
+        String imgurl=null;
+        String title=null;
+        String pageid=null;
+        String url="";
+        List<HashMap<String,String>> Ans=new ArrayList<HashMap<String,String>>();
         try{
             JSONObject jsonObject = new JSONObject(result);
             JSONArray jsonArray = jsonObject.getJSONArray("items");
 
             if(jsonArray != null && jsonArray.length() > 0) {
-                snippet =jsonArray.getJSONObject(0).getString("snippet");
+                for(int i=0 ;i<jsonArray.length();i++){
+                    HashMap<String,String> one_ans = new HashMap<String,String>();
+                    snippet =jsonArray.getJSONObject(i).getString("snippet");
+                    title=jsonArray.getJSONObject(i).getString("title");
+                    url=jsonArray.getJSONObject(i).getString("formattedUrl");
+                    pageid=jsonArray.getJSONObject(i).getJSONObject("pagemap").getJSONArray("metatags").getJSONObject(0).getString("pageid");
+                    imgurl =jsonArray.getJSONObject(i).getJSONObject("pagemap").getJSONArray("cse_image").getJSONObject(0).getString("src");
+                    if(url.contains("/title/"))
+                    {
+
+                        one_ans.put("snippet",snippet);
+                        one_ans.put("movieId",pageid);
+                        one_ans.put("imgurl",imgurl);
+                        one_ans.put("title",title);
+                        Ans.add(one_ans);
+                    }
+
+                }
             }
         }
         catch (Exception e){
             e.printStackTrace();
-            snippet = "NO INFO FOUND";
         }
-        return snippet;
+        return Ans;
     }
 }

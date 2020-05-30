@@ -21,6 +21,7 @@ import com.example.mymovie.Fragment.Maps;
 import com.example.mymovie.Fragment.MovieMemoirFragment;
 import com.example.mymovie.Fragment.MovieSearchFragment;
 import com.example.mymovie.Fragment.ReportsFragment;
+import com.example.mymovie.Fragment.ViewFragment;
 import com.example.mymovie.Fragment.WatchlistFragment;
 import com.google.android.material.navigation.NavigationView;
 
@@ -76,10 +77,8 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.addMessage:
-                replaceFragment(new AddFragment());
-                break;
             case R.id.displayMessage:
+
                 replaceFragment(new ViewFragment());
                 break;
             case R.id.home:

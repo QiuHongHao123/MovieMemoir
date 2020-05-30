@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.example.mymovie.R;
 
 import java.util.List;
@@ -28,7 +29,9 @@ public class SearchmovieAdapter extends ArrayAdapter<SearchResult> {
         ImageView img=(ImageView)view.findViewById(R.id.sm_img);
         TextView name=(TextView)view.findViewById(R.id.sm_name);
         TextView releasedate=(TextView)view.findViewById(R.id.sm_releasedate);
-        img.setImageResource(searchResult.getImageId());
+        String imgurl=searchResult.getImageUrl();
+        Glide.with(getContext()).load(imgurl).centerInside().placeholder(R.mipmap.ic_launcher).into(img);
+        //img.setImageResource(searchResult.getImageId());
         name.setText(searchResult.getName());
         releasedate.setText(searchResult.getRelease_date());
         return view;

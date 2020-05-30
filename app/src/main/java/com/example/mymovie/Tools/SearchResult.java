@@ -3,9 +3,9 @@ package com.example.mymovie.Tools;
 public class SearchResult {
     private String name;
     private String release_date;
-    private int imageId;
-    public SearchResult(String name,String release_date,int imageId){
-        this.imageId=imageId;
+    private String imageUrl;
+    public SearchResult(String name,String release_date,String url){
+        this.imageUrl=url;
         this.name=name;
         this.release_date=release_date;
     }
@@ -18,13 +18,7 @@ public class SearchResult {
         this.release_date = release_date;
     }
 
-    public int getImageId() {
-        return imageId;
-    }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
-    }
 
     public String getName() {
         return name;
@@ -32,5 +26,13 @@ public class SearchResult {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
