@@ -5,16 +5,30 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mymovie.R;
 import com.example.mymovie.Tools.ImdbAPI;
+import com.example.mymovie.database.WatchListMovieDatabase;
+import com.example.mymovie.entity.WatchListMovie;
+import com.example.mymovie.viewmodel.WatchListMovieViewModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 public class ViewFragment extends Fragment {
 
@@ -26,9 +40,17 @@ public class ViewFragment extends Fragment {
     private TextView t_genre;
     private TextView t_countries;
     private ImageView img_score;
+    private Button b_add2watchlist;
+    private Button b_add2memoir;
     private ImdbAPI imdbAPI=null;
 
+    private  List<WatchListMovie> noewdata;
 
+    //WatchListMovieDatabase db = null;
+    WatchListMovieViewModel watchlistmovieViewModel;
+    FragmentManager fragmentManager=null;
+
+    private String movieId;
     private  String moviename;
     private Double score;
     private String releaseDate ;
@@ -37,19 +59,19 @@ public class ViewFragment extends Fragment {
     private String genres ;
     private String actors;
     private String countries;
-
+    private Boolean ifexisted=false;
+    private List<WatchListMovie> nowdata;
     public ViewFragment() {         // Required empty public constructor
          }
          @Override
          public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the View for this fragment
+             // Inflate the View for this fragment
              View view = inflater.inflate(R.layout.view_fragment, container, false);
              Bundle bundle=getArguments();
              //String movieId=bundle.getString("movieId");movieId
-             String movieId="tt1375666";
+             fragmentManager = getActivity().getSupportFragmentManager();
+             movieId="tt1375666";
              imdbAPI=new ImdbAPI();
-             GetimdbBymovieIdTask getimdbBymovieIdTask = new GetimdbBymovieIdTask();
-             getimdbBymovieIdTask.execute(movieId);
              t_moviename = view.findViewById(R.id.t_moviename);
              t_releaseDate = view.findViewById(R.id.t_releasedate);
              t_directors = view.findViewById(R.id.t_director);
@@ -58,6 +80,47 @@ public class ViewFragment extends Fragment {
              t_genre =view.findViewById(R.id.t_genre);
              t_countries =view.findViewById(R.id.t_country);
              img_score=view.findViewById(R.id.img_score);
+             b_add2watchlist=view.findViewById(R.id.b_add2Watchlist);
+             b_add2memoir=view.findViewById(R.id.b_add2Memoir);
+             b_add2watchlist.setClickable(false);
+             b_add2memoir.setClickable(false);
+             watchlistmovieViewModel = new ViewModelProvider(this).get(WatchListMovieViewModel.class);
+             watchlistmovieViewModel.initalizeVars(getActivity().getApplication());
+             GetimdbBymovieIdTask getimdbBymovieIdTask = new GetimdbBymovieIdTask();
+             getimdbBymovieIdTask.execute(movieId);
+             watchlistmovieViewModel.getAllWatchListMovies().observe(this, new Observer<List<WatchListMovie>>()
+             {
+                 @Override
+                 public void onChanged(@Nullable final List<WatchListMovie> watchlistmovies) {
+                     nowdata=watchlistmovies;
+                 }
+             });
+             b_add2watchlist.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     if(ifexisted==false) {
+                         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                         String cur_date = df.format(new Date());
+
+                         WatchListMovie wm = new WatchListMovie(moviename, releaseDate, cur_date, movieId);
+                         watchlistmovieViewModel.insert(wm);
+                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                         Fragment watchlistFragment = new WatchlistFragment();
+                         fragmentTransaction.replace(R.id.content_frame, watchlistFragment).addToBackStack(null).commit();
+                     }
+                     else{
+                         Toast toast=Toast.makeText(getContext(), "The movie is existed in watch list", Toast.LENGTH_SHORT);
+                         toast.show();
+                     }
+                 }
+             });
+
+             b_add2memoir.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+
+                 }
+             });
 
              return view;
     }
@@ -102,10 +165,15 @@ public class ViewFragment extends Fragment {
                 t_actors.setText(actors);
                 t_genre.setText(genres);
                 t_countries.setText(countries);
-
-
-
-
+                b_add2memoir.setClickable(true);
+                watchlistmovieViewModel.getAllWatchListMovies().getValue();
+                if(nowdata!=null){
+                    for(WatchListMovie w : nowdata){
+                    if(w.getMovieId().equals(movieId)){
+                        ifexisted=true;
+                        break;
+                    }
+                }}
             } catch (JSONException e) {
                 e.printStackTrace();
             }
