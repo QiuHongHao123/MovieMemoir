@@ -33,7 +33,7 @@ public class SearchmovieAdapter extends ArrayAdapter<SearchResult> {
         Glide.with(getContext()).load(imgurl).centerInside().placeholder(R.mipmap.ic_launcher).into(img);
         //img.setImageResource(searchResult.getImageId());
         name.setText(searchResult.getName());
-        releasedate.setText(searchResult.getRelease_date());
+        releasedate.setText("");
         return view;
     }
 

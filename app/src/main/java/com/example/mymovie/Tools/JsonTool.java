@@ -7,7 +7,7 @@ import com.example.mymovie.entity.UserTable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class JspnTool {
+public class JsonTool {
     public static UserTable tranidentifyJson2User(String userjson) {
         UserTable user = new UserTable();
         try {
@@ -57,14 +57,13 @@ public class JspnTool {
         try {
             JSONObject jsonObject = new JSONObject(Memoirjson);
             cinemajson = jsonObject.getJSONObject("cinemaId").toString();
-
             memoir.setCinemaId(tranCinemaJson2Cinema(cinemajson));
             memoir.setMemoirId(jsonObject.getInt("memoirId"));
             memoir.setScore(jsonObject.getDouble("score"));
             memoir.setMovieName(jsonObject.getString("movieName"));
             memoir.setReleaseDate(jsonObject.getString("releaseDate"));
             memoir.setWatchTime(jsonObject.getString("watchTime"));
-            //memoir.setComment(jsonObject.getString("Comment"));
+            memoir.setComment(jsonObject.getString("comment"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

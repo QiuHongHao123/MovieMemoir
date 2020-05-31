@@ -45,6 +45,7 @@ public class ViewFragment extends Fragment {
     private ImdbAPI imdbAPI=null;
 
     private  List<WatchListMovie> noewdata;
+    private String img_url;
 
     //WatchListMovieDatabase db = null;
     WatchListMovieViewModel watchlistmovieViewModel;
@@ -67,10 +68,10 @@ public class ViewFragment extends Fragment {
          public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
              // Inflate the View for this fragment
              View view = inflater.inflate(R.layout.view_fragment, container, false);
-             Bundle bundle=getArguments();
-             //String movieId=bundle.getString("movieId");movieId
+             final Bundle bundle=getArguments();
+             movieId=bundle.getString("movieId");
              fragmentManager = getActivity().getSupportFragmentManager();
-             movieId="tt1375666";
+             //movieId="tt1375666";
              imdbAPI=new ImdbAPI();
              t_moviename = view.findViewById(R.id.t_moviename);
              t_releaseDate = view.findViewById(R.id.t_releasedate);
@@ -118,6 +119,15 @@ public class ViewFragment extends Fragment {
              b_add2memoir.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
+                     Bundle bundle1=new Bundle();
+                     bundle1.putString("img_url",img_url);
+                     bundle1.putString("movieName",moviename);
+                     bundle1.putString("movieId",movieId);
+                     bundle1.putString("releaseDate",releaseDate);
+                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                     Fragment addFragment = new AddFragment();
+                     addFragment.setArguments(bundle1);
+                     fragmentTransaction.replace(R.id.content_frame, addFragment).addToBackStack(null).commit();
 
                  }
              });
@@ -143,6 +153,7 @@ public class ViewFragment extends Fragment {
                 countries=jsonObject.getString("countries");
                 score=jsonObject.getDouble("imDbRating");
                 moviename=jsonObject.getString("fullTitle");
+                img_url=jsonObject.getString("image");
                 score=score*10;
                 if(score<=9){img_score.setImageResource(R.drawable.score0);}
                 else if(score<=18){img_score.setImageResource(R.drawable.score0_5);}

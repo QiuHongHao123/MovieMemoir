@@ -14,10 +14,9 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.mymovie.R;
-import com.example.mymovie.Tools.JspnTool;
+import com.example.mymovie.Tools.JsonTool;
 import com.example.mymovie.entity.UserTable;
 import com.example.mymovie.networkconnection.NetworkConnection;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +49,7 @@ public class HomeFragment extends Fragment {
             identify=identify.replaceAll("\\[","");
             GetRecenthighestTask getRecenthighestTask = new GetRecenthighestTask();
             UserTable user = new UserTable();
-            user= JspnTool.tranidentifyJson2User(identify);
+            user= JsonTool.tranidentifyJson2User(identify);
             Calendar calendar= Calendar.getInstance();
             SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
             String curr_time=dateFormat.format(calendar.getTime());

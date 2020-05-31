@@ -1,15 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvreport"
-        style="@android:style/TextAppearance.Large"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:text="Reports"
-        android:textSize="24dp"
-        android:textStyle="bold" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tvreport"
+                    style="@android:style/TextAppearance.Large"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Reports"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spinner_bar_year"
+                    android:layout_width="176dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/line_chart"
+                    android:entries="@array/year_array"/>
+
+                <LinearLayout
+                    android:id="@+id/pie_chart"
+                    android:layout_width="405dp"
+                    android:layout_height="286dp"
+                    android:layout_marginTop="320dp"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/line_chart"
+                    android:layout_width="406dp"
+                    android:layout_height="247dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="648dp"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </LinearLayout>
+
+                <DatePicker
+                    android:id="@+id/startdate"
+                    android:layout_width="259dp"
+                    android:layout_height="69dp"
+                    android:layout_marginStart="144dp"
+                    android:layout_marginTop="76dp"
+                    android:calendarViewShown="false"
+                    android:datePickerMode="spinner"
+                    android:focusableInTouchMode="true"
+                    android:spinnersShown="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <DatePicker
+                    android:id="@+id/enddate"
+                    android:layout_width="259dp"
+                    android:layout_height="69dp"
+                    android:layout_marginStart="144dp"
+                    android:layout_marginTop="152dp"
+                    android:calendarViewShown="false"
+                    android:datePickerMode="spinner"
+                    android:focusableInTouchMode="true"
+                    android:spinnersShown="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="102dp"
+                    android:layout_marginEnd="35dp"
+                    android:text="StratDate："
+                    app:layout_constraintEnd_toStartOf="@+id/startdate"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="55dp"
+                    android:layout_marginEnd="35dp"
+                    android:text="EndDate："
+                    app:layout_constraintEnd_toStartOf="@+id/enddate"
+                    app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+                <Button
+                    android:id="@+id/b_date_confirm"
+                    android:layout_width="222dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="82dp"
+                    android:layout_marginTop="246dp"
+                    android:text="Confirm"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

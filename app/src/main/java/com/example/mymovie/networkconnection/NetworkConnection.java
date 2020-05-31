@@ -20,7 +20,7 @@ import okhttp3.Response;
 public class NetworkConnection {
 
     private OkHttpClient client=null;
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    public static final MediaType JSON = MediaType.parse("application/json;charset=utf-8");
     private String results="";
     public NetworkConnection(){
         client=new OkHttpClient();
@@ -57,6 +57,23 @@ public class NetworkConnection {
         }
         return results;
     }
+
+    public String getAllMemoir(){
+        final String methodPath = "movie_entity.memoir";
+        Request.Builder builder = new Request.Builder();
+        builder.url(BASE_URL + methodPath);
+        Request request = builder.build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            results=response.body().string();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return results;
+    }
+
 
     public String getMaxUserid() {
         final String methodPath = "movie_entity.usertable/getMaxId/";

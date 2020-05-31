@@ -23,7 +23,11 @@ import com.example.mymovie.R;
 import com.example.mymovie.entity.WatchListMovie;
 import com.example.mymovie.viewmodel.WatchListMovieViewModel;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,8 +40,10 @@ public class WatchlistFragment extends Fragment {
     WatchListMovieViewModel watchlistmovieViewModel;
     private List<WatchListMovie> nowdata;
     private List<HashMap<String, String>> unitListArray;
+    SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private int list_select=-1;
     private SimpleAdapter mListAdapter;
+    List<WatchListMovie> todelete;
     public WatchlistFragment() {
         // Required empty public constructor
     }
@@ -77,6 +83,7 @@ public class WatchlistFragment extends Fragment {
                 unitList.setAdapter(mListAdapter);
             }
         });
+        delete_longitem();
         unitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -125,5 +132,51 @@ public class WatchlistFragment extends Fragment {
 
         return view;
 
+    }
+    public void delete_longitem(){
+        todelete=new ArrayList<WatchListMovie>();
+        for(int i=0;i<unitListArray.size();i++){
+            Date one_date =new Date();
+            ParsePosition pos = new ParsePosition(0);
+            one_date = formatter.parse(unitListArray.get(i).get("AddTime"), pos);
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.add(Calendar.DATE, -7);
+            Date todaypre7 = calendar1.getTime();
+            if( one_date.before(todaypre7)){
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setIcon(R.drawable.ic_launcher_foreground);
+                builder.setTitle(unitListArray.get(i).get("MovieName")+"Long time after add");
+                builder.setMessage("Remove the Movie from movielist？");
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                    }
+                });
+
+                final int finalI = i;
+
+                builder.setPositiveButton("Determine", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        todelete.add(nowdata.get(finalI));
+
+                    }
+                });
+
+                builder.show();
+
+            }
+
+
+        }
+        if(!todelete.isEmpty()){
+            for(WatchListMovie watchListMovie:todelete){
+                watchlistmovieViewModel.delete(watchListMovie);
+            }}
     }
 }
