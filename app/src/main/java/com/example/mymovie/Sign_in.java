@@ -111,7 +111,7 @@ public class Sign_in extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(String identify) {
-            if(identify.isEmpty()){
+            if(identify.equals("[]")){
 
                 AlertDialog.Builder builder  = new AlertDialog.Builder(Sign_in.this);
                 builder.setTitle("Sign in failed" ) ;

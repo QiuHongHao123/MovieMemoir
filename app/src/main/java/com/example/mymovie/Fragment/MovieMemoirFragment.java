@@ -161,8 +161,11 @@ public class MovieMemoirFragment extends Fragment {
                     memoirShow.setCinema_postcode(memoir.getCinemaId().getCinemaLocation());
                     memoirShow.setComment(memoir.getComment());
                     memoirShow.setImg_url(hashMap.get("img_url"));
-
-                    Double s=new Double(hashMap.get("score"));
+                    String score=hashMap.get("score");
+                    Double s=0.5;
+                    if(score!=null){
+                    s=new Double(hashMap.get("score"));}
+                    else{ s=0.5;}
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                     ParsePosition pos = new ParsePosition(0);
                     Date releasedate = formatter.parse(memoir.getReleaseDate(), pos);

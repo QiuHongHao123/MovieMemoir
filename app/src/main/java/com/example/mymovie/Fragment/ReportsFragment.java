@@ -59,7 +59,7 @@ public class ReportsFragment extends Fragment {
         b_confire=view.findViewById(R.id.b_date_confirm);
         pie_titles=new ArrayList<String>();
         bar_titles=new ArrayList<String>();
-        LinearLayout pie_view=view.findViewById(R.id.pie_chart);
+        final LinearLayout pie_view=view.findViewById(R.id.pie_chart);
         LinearLayout bar_view=view.findViewById(R.id.line_chart);
         bar_titles.add("Jan");
         bar_titles.add("Feb");
@@ -86,15 +86,6 @@ public class ReportsFragment extends Fragment {
 
 
 
-        DefaultRenderer renderer = buildCategoryRenderer(colours); // 把分布的颜色传给渲染器
-        renderer.setZoomButtonsVisible(true);
-        renderer.setZoomEnabled(true);
-        renderer.setChartTitleTextSize(40);
-        renderer.setInScroll(true);
-        renderer.setZoomButtonsVisible(false);
-        View pie_draw = ChartFactory.getPieChartView(getContext(), buildCategoryDataset("Location distribute", pie_data), renderer);
-        pie_draw.setBackgroundColor(Color.WHITE);
-        pie_view.addView(pie_draw);
 
         XYMultipleSeriesRenderer xyMultipleSeriesRenderer=buildBarRenderer(colours);
         XYMultipleSeriesDataset mybarset=buildBarDate(bar_date);
@@ -122,6 +113,15 @@ public class ReportsFragment extends Fragment {
                 String start_dateval=start_year+"-"+start_month+"-"+start_day;
                 String end_dayval=end_year+"-"+end_month+"-"+end_day;
 
+                DefaultRenderer renderer = buildCategoryRenderer(colours); // 把分布的颜色传给渲染器
+                renderer.setZoomButtonsVisible(true);
+                renderer.setZoomEnabled(true);
+                renderer.setChartTitleTextSize(40);
+                renderer.setInScroll(true);
+                renderer.setZoomButtonsVisible(false);
+                View pie_draw = ChartFactory.getPieChartView(getContext(), buildCategoryDataset("Location distribute", pie_data), renderer);
+                pie_draw.setBackgroundColor(Color.WHITE);
+                pie_view.addView(pie_draw);
             }
         });
         return view;
